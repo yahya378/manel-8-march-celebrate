@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Manel 🌹</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose:  #c0455a;
+      --blush: #f2c4ce;
+      --cream: #fdf6f0;
+      --gold:  #c9a84c;
+      --deep:  #1a0409;
+      --ink:   #3d1520;
+    }
+    html, body {
+      min-height: 100%;
+      font-family: 'Jost', sans-serif;
+      background: var(--deep);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ══ INTRO ══ */
+    #intro {
+      position: fixed; inset: 0; z-index: 100;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #intro.out { animation: introFade .8s ease forwards; pointer-events:none; }
+    #intro.done { display: none; }
+    @keyframes introFade { to { opacity:0; } }
+
+    .ring-wrap {
+      position: relative; width: 200px; height: 200px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .intro-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1.5px solid transparent;
+      border-top-color: var(--gold);
+      border-right-color: #c0455a55;
+      animation: spinRing 1.6s linear infinite;
+    }
+    .intro-ring.r2 {
+      inset: 20px;
+      border-top-color: transparent;
+      border-bottom-color: var(--gold);
+      animation: spinRing 2.2s linear infinite reverse;
+    }
+    .intro-ring.r3 {
+      inset: 40px;
+      border-left-color: #e8bfc688;
+      border-top-color: transparent;
+      animation: spinRing 3s linear infinite;
+    }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+
+    .intro-rose {
+      font-size: 3.8rem;
+      opacity: 0;
+      animation: rosePop .7s 1s cubic-bezier(.34,1.56,.64,1) forwards;
+      position: relative; z-index: 2;
+    }
+    @keyframes rosePop {
+      from { opacity:0; transform: scale(0) rotate(-40deg); }
+      to   { opacity:1; transform: scale(1) rotate(0deg); }
+    }
+    .intro-name {
+      margin-top: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4.5rem; font-weight: 300; font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1.2px var(--gold);
+      letter-spacing: .15em;
+      opacity: 0;
+      animation: nameIn .9s 1.8s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    @keyframes nameIn {
+      from { opacity:0; letter-spacing:.6em; filter:blur(10px); }
+      to   { opacity:1; letter-spacing:.15em; filter:blur(0); }
+    }
+    .intro-tag {
+      margin-top: .5rem;
+      font-size: .78rem; letter-spacing: .35em;
+      text-transform: uppercase; color: #c0455a99;
+      opacity: 0;
+      animation: fadeUp .7s 2.5s ease forwards;
+    }
+
+    /* ══ PETALS ══ */
+    .petals-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .petal {
+      position: absolute; top: -60px;
+      background: radial-gradient(ellipse at 40% 30%, #e88fa0, #c0455a77);
+      border-radius: 60% 40% 60% 40%;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1); opacity:.8; }
+      80%  { opacity:.4; }
+      100% { transform: translateY(110vh) rotate(450deg) scale(.4); opacity:0; }
+    }
+
+    /* ══ SCREENS ══ */
+    .screen {
+      position: relative; z-index: 1;
+      display: none; min-height: 100vh;
+      align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      padding: 2rem 1.5rem;
+    }
+    .screen.active { display: flex; }
+
+    /* ══ S1 LANDING ══ */
+    #s1 {
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 38%, #5c1325 0%, transparent 80%),
+        radial-gradient(ellipse 35% 25% at 78% 78%, #2e0b14, transparent 70%),
+        var(--deep);
+    }
+    #s1::after {
+      content:'';
+      position: absolute; inset: 0; pointer-events: none;
+      background: conic-gradient(from 200deg at 50% 0%, transparent 0deg, #c9a84c18 12deg, transparent 24deg);
+      animation: beam 7s ease-in-out infinite alternate;
+    }
+    @keyframes beam { from{transform:rotate(-18deg);} to{transform:rotate(18deg);} }
+
+    .sparkles {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .sp {
+      position: absolute; opacity: 0;
+      animation: sparkle ease infinite;
+    }
+    @keyframes sparkle {
+      0%,100%{ opacity:0; transform:scale(0) rotate(0deg); }
+      40%    { opacity:1; transform:scale(1.3) rotate(25deg); }
+      70%    { opacity:.5; }
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5.5rem, 22vw, 15rem);
+      font-weight: 300; font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--gold);
+      line-height: 1; letter-spacing: -.01em;
+      opacity: 0;
+      animation: heroIn 1.1s .3s cubic-bezier(.16,1,.3,1) forwards;
+      position: relative;
+      text-shadow: 0 0 100px #c9a84c1a;
+    }
+    @keyframes heroIn {
+      from { opacity:0; transform:translateY(60px) skewY(4deg); filter:blur(16px); }
+      to   { opacity:1; transform:none; filter:blur(0); }
+    }
+    .date-sub {
+      font-size: clamp(.85rem, 2.3vw, 1.05rem);
+      letter-spacing: .45em; text-transform: uppercase;
+      color: #e4b8c2; margin-top: .3rem;
+      opacity: 0; animation: fadeUp .8s .7s ease forwards;
+    }
+    .date-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.8vw, 1.35rem); font-style: italic;
+      color: var(--gold); letter-spacing: .12em;
+      opacity: 0; animation: fadeUp .8s .95s ease forwards;
+      margin-top: .4rem;
+    }
+    .tagline {
+      margin-top: 1.6rem;
+      font-size: clamp(.88rem, 2.2vw, 1.08rem); font-weight:300;
+      color: #d8a0b0; letter-spacing:.05em;
+      max-width: 380px; line-height: 1.85;
+      opacity: 0; animation: fadeUp .8s 1.2s ease forwards;
+    }
+    .btn-open {
+      margin-top: 2.8rem; padding: 1.05rem 3rem;
+      background: transparent; border: 1.5px solid var(--gold);
+      color: var(--gold); font-family: 'Jost', sans-serif;
+      font-size: .95rem; letter-spacing: .2em; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px;
+      position: relative; overflow: hidden;
+      opacity: 0; animation: fadeUp .8s 1.45s ease forwards;
+      transition: color .35s, transform .25s, box-shadow .35s;
+    }
+    .btn-open::before {
+      content:''; position:absolute; inset:0;
+      background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease; z-index:-1;
+    }
+    .btn-open:hover::before { transform: scaleX(1); }
+    .btn-open:hover { color: var(--deep); transform: translateY(-3px); box-shadow: 0 14px 44px #c9a84c30; }
+
+    /* ══ S2 LETTER ══ */
+    #s2 {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, #3b0e1a, transparent 80%),
+        var(--deep);
+      padding: 3rem 1.5rem 4.5rem;
+    }
+    .letter-wrap {
+      max-width: 640px; width: 100%; margin: 0 auto;
+      animation: letterIn .9s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes letterIn {
+      from { opacity:0; transform:translateY(50px) scale(.96); }
+      to   { opacity:1; transform:none; }
+    }
+    .letter-card {
+      background: linear-gradient(155deg, #fdf6f0, #fae6ee);
+      color: var(--ink); border-radius: 4px;
+      padding: 3rem 2.8rem 2.8rem;
+      box-shadow: 0 40px 100px #00000099, 0 0 0 1px #c9a84c44;
+      position: relative;
+    }
+    .letter-card::before {
+      content:''; position:absolute; top:0;left:0;right:0;height:4px;
+      background:linear-gradient(90deg,var(--rose),var(--gold),var(--rose));
+      border-radius:4px 4px 0 0;
+    }
+    .letter-card::after {
+      content:''; position:absolute; bottom:0; right:0;
+      width:40px; height:40px;
+      background:linear-gradient(225deg,#e8bfc6 50%,transparent 50%);
+    }
+    .letter-ornament { text-align:center; font-size:1.9rem; margin-bottom:1.2rem; letter-spacing:.35em; }
+    .letter-to {
+      font-family:'Cormorant Garamond',serif; font-size:1rem;
+      letter-spacing:.22em; color:var(--rose); text-transform:uppercase; margin-bottom:.4rem;
+    }
+    .letter-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.5rem,4vw,2.1rem);
+      font-weight:400;font-style:italic;color:var(--ink);
+      margin-bottom:1.6rem;line-height:1.3;
+    }
+    .divider {
+      width:65px;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+      margin:1.8rem auto;
+    }
+    .letter-body {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1rem,2.5vw,1.18rem);
+      line-height:1.95;color:#3a1018;font-weight:300;
+    }
+    .letter-body p+p { margin-top:1rem; }
+    .hi { font-style:italic;color:var(--rose);font-weight:400; }
+    .letter-sig {
+      margin-top:2rem;
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.1rem;font-style:italic;color:var(--rose);text-align:right;
+    }
+    .funny-hint {
+      margin-top:1.4rem;font-size:.82rem;color:#b07080;
+      letter-spacing:.1em;font-style:italic;
+      animation:pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+    .btn-funny {
+      margin-top:.8rem;padding:.75rem 2rem;
+      background:transparent;border:1.5px solid #c0455a66;
+      color:var(--blush);font-family:'Jost',sans-serif;
+      font-size:.88rem;letter-spacing:.14em;text-transform:uppercase;
+      cursor:pointer;border-radius:2px;transition:all .25s;
+    }
+    .btn-funny:hover{background:#c0455a22;border-color:var(--rose);transform:translateY(-2px);}
+
+    /* ══ S3 HACK 1 ══ */
+    #s3 { background: #020202; }
+    .terminal {
+      max-width:560px;width:90%;
+      background:#080808;border:1px solid #00ff4133;border-radius:8px;overflow:hidden;
+      box-shadow:0 0 80px #00ff4112,0 0 0 1px #00ff4120;
+      animation: termIn .6s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes termIn{from{opacity:0;transform:translateY(40px)scale(.95);}to{opacity:1;transform:none;}}
+    .term-bar{background:#111;padding:.55rem 1rem;display:flex;align-items:center;gap:.5rem;}
+    .dot{width:12px;height:12px;border-radius:50%;}
+    .dot.r{background:#ff5f57;}.dot.y{background:#febc2e;}.dot.g{background:#28c840;}
+    .term-title{margin-left:.5rem;font-size:.75rem;color:#444;letter-spacing:.1em;}
+    .term-body{
+      padding:1.6rem 1.8rem 2rem;
+      font-family:'Courier New',monospace;
+      font-size:clamp(.78rem,2vw,.9rem);line-height:2;color:#00ff41;
+    }
+    .term-line { overflow: hidden; white-space: nowrap; }
+    .term-warn{color:#ff4466;font-weight:bold;} .term-ok{color:#00ff41;} .term-info{color:#ffdd55;}
+    .d1 { animation: typeIt .5s steps(40,end) .2s both; }
+    .d2 { animation: typeIt .6s steps(40,end) .9s both; }
+    .d3 { animation: typeIt .7s steps(40,end) 1.7s both; }
+    .d4 { animation: typeIt .6s steps(40,end) 2.6s both; }
+    .d5 { animation: typeIt .7s steps(40,end) 3.4s both; }
+    .d6 { animation: typeIt .6s steps(40,end) 4.2s both; }
+    .d7 { animation: typeIt .8s steps(40,end) 5s both; }
+    @keyframes typeIt {
+      from { max-width: 0; opacity: 0; }
+      1%   { opacity: 1; }
+      to   { max-width: 100%; }
+    }
+    .hack-msg{
+      font-size:clamp(1.2rem,4vw,1.9rem);
+      font-family:'Cormorant Garamond',serif;font-style:italic;
+      color:#ff4466;margin-top:2rem;
+      opacity:0;animation:fadeUp .6s 5.8s ease forwards;
+      text-shadow:0 0 30px #ff446655;
+    }
+    .btn-hack2{
+      margin-top:1.2rem;padding:.75rem 2rem;
+      background:transparent;border:1px solid #ff446555;
+      color:#ff8899;font-family:'Jost',sans-serif;
+      font-size:.85rem;letter-spacing:.16em;text-transform:uppercase;
+      cursor:pointer;border-radius:2px;
+      opacity:0;animation:fadeUp .6s 6.5s ease forwards;
+      transition:all .25s;
+    }
+    .btn-hack2:hover{background:#ff446522;transform:translateY(-2px);}
+
+    /* ══ S4 HACK 2 ══ */
+    #s4{background:radial-gradient(ellipse at 50% 50%,#22002a,#000 80%);}
+    .chaos-wrap{
+      max-width:600px;text-align:center;
+      animation:chaosIn .6s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes chaosIn{
+      0%{transform:scale(1.12)rotate(-2deg);opacity:0;}
+      30%{transform:scale(.97)rotate(1deg);opacity:1;}
+      60%{transform:scale(1.02)rotate(-.5deg);}
+      100%{transform:none;opacity:1;}
+    }
+    .skull{font-size:5rem;display:block;animation:skullBounce 1.2s ease infinite alternate;}
+    @keyframes skullBounce{to{transform:translateY(-14px)rotate(6deg);}}
+    .hack2-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2rem,7vw,4rem);color:#ff4466;margin:.8rem 0 .3rem;
+      text-shadow:0 0 40px #ff446688,0 0 80px #ff446633;
+      animation:glitch 4s ease infinite;
+    }
+    @keyframes glitch{
+      0%,93%,100%{text-shadow:0 0 40px #ff446688;transform:none;}
+      94%{transform:skewX(-5deg)translateX(4px);text-shadow:-4px 0 #00f0ff,4px 0 #ff4466;}
+      95%{transform:skewX(3deg)translateX(-3px);}
+      96%{transform:none;}
+    }
+    .manel-hacked{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1rem,3vw,1.4rem);
+      font-style:italic;color:#cc88aa;letter-spacing:.05em;margin-bottom:1.3rem;
+    }
+    .hack2-lines{
+      font-family:'Jost',sans-serif;
+      font-size:clamp(.82rem,2.2vw,.95rem);
+      color:#bb6688;line-height:2.2;letter-spacing:.03em;
+    }
+    .hack2-lines span{display:block;}
+    .hack2-reveal{
+      margin-top:2.4rem;padding:1.8rem 2rem;
+      border:1px solid #c0455a44;border-radius:6px;
+      background:linear-gradient(135deg,#1a0010,#0d0008);
+      box-shadow:0 0 40px #c0455a11;
+    }
+    .confetti{font-size:2.2rem;display:block;margin-bottom:.6rem;letter-spacing:.2em;}
+    .hack2-reveal p{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1rem,3vw,1.28rem);
+      color:#f2c4ce;line-height:1.9;font-style:italic;
+    }
+    .hack2-reveal strong{color:var(--gold);font-style:normal;}
+    .btn-restart{
+      margin-top:2rem;padding:.8rem 2.4rem;
+      background:transparent;border:1.5px solid var(--gold);
+      color:var(--gold);font-family:'Jost',sans-serif;
+      font-size:.9rem;letter-spacing:.16em;text-transform:uppercase;
+      cursor:pointer;border-radius:2px;transition:all .3s;
+    }
+    .btn-restart:hover{background:#c9a84c22;transform:translateY(-2px);}
+
+    /* ══ UTILS ══ */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+  </style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="ring-wrap">
+    <div class="intro-ring"></div>
+    <div class="intro-ring r2"></div>
+    <div class="intro-ring r3"></div>
+    <div class="intro-rose">🌹</div>
+  </div>
+  <div class="intro-name">8 March</div>
+  <div class="intro-tag">Women's Day</div>
+</div>
+
+<!-- PETALS -->
+<div class="petals-canvas" id="petals"></div>
+
+<!-- ── S1 LANDING ── -->
+<section class="screen active" id="s1">
+  <div class="sparkles" id="sparkles"></div>
+  <div class="hero-name">Manel</div>
+  <div class="date-sub">8 March · Women's Day</div>
+  <div class="date-badge">✦ att wach y9olo kol 3am wanti bkhir 😂 !!  ✦</div>
+  <p class="tagline">Because the world deserves to celebrate you, Manel — today and every single day.</p>
+  <button class="btn-open" onclick="showLetter()">✦ Open your gift ✦</button>
+</section>
+
+<!-- ── S2 LETTER ── -->
+<section class="screen" id="s2">
+  <div class="letter-wrap">
+    <div class="letter-card">
+      <div class="letter-ornament">🌸 ✦ 🌸</div>
+      <div class="letter-to">To · Manel</div>
+      <div class="letter-title">To the woman who lights up every room she walks into… (hadi walah chatgpt ktabha, idk why ma7abitch na7iha 😂)</div>
+      <div class="divider"></div>
+      <div class="letter-body">
+        <p>Today, on the 8th of March, the world pauses to celebrate women — their strength, their grace, their endless capacity to love and inspire. But honestly? <span class="hi">One day is not nearly enough for someone like you</span></p>
+        <p>asabro khalona man hado les phrases generer par ai psq raho y suggestili swala7 chwiya bizar 😂</p>
+        <p>normalment tat9alchi 3lihom lyoum f dar t9olilhom lyoum mandirch l minage 😎😎, mais je pense lokan tro7i t9olihalhom machakitch tal9ay win tbati, so be patient at least tarab7i d3awi lkhir man 3andhom 👀</p>
+        <p>rani 7asab ro7i f discussion nta3 insta, w ana 9a3ad naktab bl html 😂😂, sooo b3atlak hadi la lettre just to make u feel better, and may to motivate u to start coding w tadakhli l hada domaine nta3 software development w twali t compiti m3aya 👀👀 </p>
+        <p>so i hope tkhayri domain liysa3adka w tavencer fih mli7 + khami cote bussiness entrenaria machi just learning 😂😂 think to in earning 👀</p>
+        <p>u have a good character may allah protect you + matansaych l bussiness nta3ak nta3 chocolat kamli fih, w investi fih wa9tak, w ida kachma s7a9iti anything i am here i can help you</p>
+      </div>
+      <div class="divider"></div>
+      <div class="letter-sig">from a peson he like coding so much</div>
+    </div>
+    <p class="funny-hint">⚠️ psst, Manel… there might be something else below…</p>
+    <button class="btn-funny" onclick="showHack1()">🤫 click me</button>
+  </div>
+</section>
+
+<!-- ── S3 HACK 1 ── -->
+<section class="screen" id="s3">
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="term-title">secret_agent.exe — targeting: Manel</span>
+    </div>
+    <div class="term-body">
+      <div class="term-line d1 term-warn">[ INITIATING OPERATION MANEL... ]</div>
+      <div class="term-line d2 term-ok">$ locating target device... found. 📍</div>
+      <div class="term-line d2 term-ok">$ YOUR birthday Feb 6 2005📍</div>
+      <div class="term-line d3 term-info">$ scanning files... ██████████ 100%</div>
+      <div class="term-line d4 term-ok">$ accessing contacts... found "papa  " × 47 saved names</div>
+      <div class="term-line d5 term-warn">$ reading recent messages... 👀 Manel...</div>
+      <div class="term-line d6 term-ok">$ downloading selfie collection... 🤳 847 photos. Legend.</div>
+      <div class="term-line d7 term-warn">$ HACK COMPLETE. Welcome to my world 😈</div>
+    </div>
+  </div>
+  <div class="hack-msg">☠️ I hacked your phone, Manel. ☠️<br>
+    <span style="font-size:.68em;color:#ff8899;font-style:normal;font-family:'Jost',sans-serif;letter-spacing:.05em;">
+      wach wa9ila 7chithalak !! 😏
+    </span>
+  </div>
+  <button class="btn-hack2" onclick="showHack2()">🔴 Click me again. trust me this time.</button>
+</section>
+
+<!-- ── S4 HACK 2 ── -->
+<section class="screen" id="s4">
+  <div class="chaos-wrap">
+    <span class="skull">💀</span>
+    <div class="hack2-title">HACKED. AGAIN.</div>
+    <div class="manel-hacked">Congratulations, Manel. You clicked it. Again.</div>
+    <div class="hack2-lines">
+      <span>✅ Your WiFi password — stolen. </span>
+      <span>✅ Your Location  </span>
+      <span>✅ Your camera roll — 847 selfies. No notes.</span>
+      <span>✅ Your search history .</span>
+    </div>
+    <div class="hack2-reveal">
+      <span class="confetti">🌹 🎉 🌸</span>
+      <p>Okay, I confess — I hacked absolutely nothing.<br>But I <em>did</em> want to make you scary today (i mean smile lol )<br><br>
+      Happy Women's Day. You are one of a kind, and the world is so lucky to have you. 🌹 (mam hadi nta3 chatgpt lol)</p>
+    </div>
+    <button class="btn-restart" onclick="restart()">↩ Read again from the beginning</button>
+  </div>
+</section>
+
+<script>
+  /* INTRO */
+  setTimeout(() => {
+    document.getElementById('intro').classList.add('out');
+    setTimeout(() => document.getElementById('intro').classList.add('done'), 850);
+  }, 3500);
+
+  /* PETALS */
+  const canvas = document.getElementById('petals');
+  for (let i = 0; i < 34; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left              = Math.random() * 100 + 'vw';
+    p.style.width             = (10 + Math.random() * 14) + 'px';
+    p.style.height            = (14 + Math.random() * 16) + 'px';
+    p.style.animationDuration = (7 + Math.random() * 9) + 's';
+    p.style.animationDelay    = (Math.random() * 16) + 's';
+    p.style.transform         = 'rotate(' + (Math.random()*360) + 'deg)';
+    canvas.appendChild(p);
+  }
+
+  /* SPARKLES */
+  const sc = document.getElementById('sparkles');
+  ['✦','✧','·','*','✦','✧','·'].forEach((ch, i) => {
+    for (let j = 0; j < 2; j++) {
+      const s = document.createElement('div');
+      s.className = 'sp';
+      s.textContent = ch;
+      s.style.left              = (4 + Math.random() * 92) + '%';
+      s.style.top               = (8 + Math.random() * 84) + '%';
+      s.style.animationDelay    = (Math.random() * 5) + 's';
+      s.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+      s.style.color             = Math.random() > .5 ? '#c9a84c' : '#f2c4ce88';
+      s.style.fontSize          = (.6 + Math.random() * .8) + 'rem';
+      sc.appendChild(s);
+    }
+  });
+
+  /* NAVIGATION */
+  function switchTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function showLetter() { switchTo('s2'); }
+  function showHack1()  { switchTo('s3'); }
+  function showHack2()  { switchTo('s4'); }
+  function restart()    { switchTo('s1'); }
+</script>
+</body>
+</html>
